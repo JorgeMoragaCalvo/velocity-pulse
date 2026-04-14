@@ -1,0 +1,24 @@
+# Core vision
+opencv-python-headless==4.9.0.80
+
+# PyTorch (CPU-only for Docker portability; remove +cpu for CUDA locally)
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.2.2+cpu
+torchvision==0.17.2+cpu
+
+# YOLO + BoT-SORT tracking
+ultralytics==8.1.47
+
+# MiDaS backbone
+timm==0.9.16
+
+# Numerical / signal processing
+numpy==2.4.4
+scipy==1.13.0
+
+# Visualisation & PDF output
+matplotlib==3.10.8
+Pillow==12.2.0
+
+# Utilities
+tqdm==4.66.2

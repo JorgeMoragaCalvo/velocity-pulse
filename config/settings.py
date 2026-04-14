@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import os
-from dataclasses import dataclass, field
 from pathlib import Path
 
 # ---------------------------------------------------------------------------
@@ -49,7 +48,7 @@ DEPTH_INFERENCE_INTERVAL: int = 3  # run depth every N frames
 # ---------------------------------------------------------------------------
 # Fusion
 # ---------------------------------------------------------------------------
-FUSION_WARMUP_FRAMES: int = 30     # frames before variance weights stabilise
+FUSION_WARMUP_FRAMES: int = 30     # frames before variance weights stabilize
 FUSION_MAX_DEPTH_WEIGHT: float = 0.40
 
 # ---------------------------------------------------------------------------

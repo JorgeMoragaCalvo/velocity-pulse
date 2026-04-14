@@ -1,0 +1,10 @@
+.venv/
+.idea/
+__pycache__/
+*.pyc
+*.pyo
+outputs/
+*.mp4
+*.avi
+*.pdf
+.git/

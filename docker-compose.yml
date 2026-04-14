@@ -1,0 +1,12 @@
+version: "3.9"
+
+services:
+  velocity-pulse:
+    build: .
+    image: velocity-pulse:latest
+    volumes:
+      - ./TEST_VEL:/app/TEST_VEL
+      - ./outputs:/app/outputs
+      - ./config:/app/config
+    # Override CMD via: docker compose run velocity-pulse --method centroid
+    command: ["--method", "fusion", "--input", "/app/TEST_VEL"]

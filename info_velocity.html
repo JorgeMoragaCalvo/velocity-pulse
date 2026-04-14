@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Velocity Pulse - Briefing Técnico</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+    
+    <!-- 
+        Color Palette: Industrial Cyber
+        Background: #0f172a (Slate 900)
+        Accent 1: #22d3ee (Cyan 400)
+        Accent 2: #f59e0b (Amber 500)
+        Accent 3: #a855f7 (Purple 500)
+    -->
+
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #0f172a;
+            color: #e2e8f0;
+            overflow-x: hidden;
+        }
+        h1, h2, h3, .mono-font {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin: auto;
+            height: 300px;
+        }
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .neon-border {
+            border: 1px solid rgba(34, 211, 238, 0.3);
+            box-shadow: 0 0 15px rgba(34, 211, 238, 0.1);
+        }
+        .neon-border-amber {
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            box-shadow: 0 0 15px rgba(245, 158, 11, 0.1);
+        }
+        .video-container {
+            aspect-ratio: 16 / 9;
+            background: #000;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            border: 1px solid #1e293b;
+        }
+        .nav-tab.active {
+            color: #22d3ee;
+            border-bottom: 2px solid #22d3ee;
+            background: rgba(34, 211, 238, 0.05);
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cyber: {
+                            dark: '#0f172a',
+                            card: '#1e293b',
+                            cyan: '#22d3ee',
+                            amber: '#f59e0b',
+                            purple: '#a855f7'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="antialiased selection:bg-cyber-cyan selection:text-slate-900">
+
+    <!-- Header Section -->
+    <header class="w-full py-12 px-4 text-center border-b border-white/10 bg-slate-950/50">
+        <div class="max-w-5xl mx-auto">
+            <h1 class="text-4xl md:text-6xl font-black tracking-tighter uppercase mb-2 italic">
+                <span class="text-cyber-cyan">Velocity</span> <span class="text-white">Pulse</span>
+            </h1>
+            <p class="text-cyber-amber mono-font text-sm md:text-base tracking-[0.3em] uppercase mb-6">
+                Fleet Monitoring Systems // CV Technical Challenge
+            </p>
+            <div class="h-1 w-24 bg-cyber-amber mx-auto mb-6"></div>
+            <p class="text-slate-400 max-w-2xl mx-auto text-sm md:text-base">
+                Bienvenido al núcleo de la analítica vehicular. Tu misión: superar la perspectiva y dominar la cinemática en entornos industriales adversos.
+            </p>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto p-4 md:p-8">
+        
+        <!-- Navigation Tabs -->
+        <nav class="flex flex-wrap justify-center gap-2 mb-12 border-b border-slate-800">
+            <button onclick="showTab('mission')" class="nav-tab active px-6 py-3 font-bold uppercase tracking-widest text-xs transition-all duration-300">01. Misión</button>
+            <button onclick="showTab('modules')" class="nav-tab px-6 py-3 font-bold uppercase tracking-widest text-xs transition-all duration-300">02. Módulos</button>
+            <button onclick="showTab('eval')" class="nav-tab px-6 py-3 font-bold uppercase tracking-widest text-xs transition-all duration-300">03. Evaluación</button>
+            <button onclick="showTab('stack')" class="nav-tab px-6 py-3 font-bold uppercase tracking-widest text-xs transition-all duration-300">04. Requisitos</button>
+        </nav>
+
+        <!-- Tab 1: Mission & Videos -->
+        <section id="mission" class="tab-content active space-y-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div class="space-y-4">
+                    <h2 class="text-2xl font-bold text-white flex items-center">
+                        <span class="text-cyber-cyan mr-3">◈</span> El Desafío Cinemático
+                    </h2>
+                    <p class="text-slate-300 leading-relaxed">
+                        Debes desarrollar un sistema capaz de estimar la velocidad y aceleración de una camioneta transitando a velocidades fijas. Contamos con conos de tráfico a distancias conocidas para tu calibración.
+                    </p>
+                    <div class="bg-cyber-card p-4 rounded-lg border-l-4 border-cyber-amber">
+                        <p class="text-xs font-bold text-cyber-amber uppercase mb-1">Recursos Disponibles:</p>
+                        <ul class="text-sm text-slate-400 space-y-1">
+                            <li>• Imagen de puntos de calibración marcados.</li>
+                            <li>• Distancias métricas precisas entre conos.</li>
+                            <li>• Videos de referencia a 20km/h y 40km/h.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="space-y-4">
+                    <div class="video-container neon-border">
+                        <video id="mainVideo" class="w-full h-full object-cover" controls>
+                            <source src="videos/video_2026-03-26_06-21-45.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="changeVideo('videos/video_2026-03-26_06-21-45.mp4', '20 KM/H')" class="flex-1 bg-slate-800 hover:bg-cyber-cyan hover:text-slate-900 p-2 text-[10px] font-bold uppercase tracking-tighter transition-all">Stream 01 (20km/h)</button>
+                        <button onclick="changeVideo('videos/video_2026-03-26_06-31-45.mp4', '40 KM/H')" class="flex-1 bg-slate-800 hover:bg-cyber-amber hover:text-slate-900 p-2 text-[10px] font-bold uppercase tracking-tighter transition-all">Stream 02 (40km/h)</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tab 2: Modules -->
+        <section id="modules" class="tab-content space-y-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Module 1 -->
+                <div class="bg-cyber-card p-6 rounded-xl neon-border relative overflow-hidden group hover:bg-slate-800 transition-colors">
+                    <div class="absolute -top-6 -right-6 text-7xl opacity-5 group-hover:rotate-12 transition-transform">📊</div>
+                    <h3 class="text-cyber-cyan font-bold mb-2 uppercase tracking-widest text-sm">Módulo 01</h3>
+                    <h4 class="text-xl font-bold text-white mb-4">Benchmark Multi-Método</h4>
+                    <p class="text-slate-400 text-sm mb-4">
+                        Implementa la segmentación y desarrolla **3 métodos distintos** para el cálculo de velocidad (centroides, puntos clave, máscaras, etc.).
+                    </p>
+                    <ul class="text-xs space-y-2 text-slate-500">
+                        <li class="flex items-center"><span class="w-1.5 h-1.5 bg-cyber-cyan rounded-full mr-2"></span> Calibración por Homografía.</li>
+                        <li class="flex items-center"><span class="w-1.5 h-1.5 bg-cyber-cyan rounded-full mr-2"></span> Comparativa de precisión vs Velocidad Real.</li>
+                    </ul>
+                </div>
+                <!-- Module 2 -->
+                <div class="bg-cyber-card p-6 rounded-xl border border-cyber-purple/30 relative overflow-hidden group hover:bg-slate-800 transition-colors">
+                    <div class="absolute -top-6 -right-6 text-7xl opacity-5 group-hover:rotate-12 transition-transform">👁️</div>
+                    <h3 class="text-cyber-purple font-bold mb-2 uppercase tracking-widest text-sm">Módulo 02</h3>
+                    <h4 class="text-xl font-bold text-white mb-4">Profundidad & Fusión</h4>
+                    <p class="text-slate-400 text-sm mb-4">
+                        Eleva la precisión obteniendo la **profundidad aparente** de la imagen y fusiona los mejores resultados para minimizar el error.
+                    </p>
+                    <ul class="text-xs space-y-2 text-slate-500">
+                        <li class="flex items-center"><span class="w-1.5 h-1.5 bg-cyber-purple rounded-full mr-2"></span> Estimación Monocular de Profundidad.</li>
+                        <li class="flex items-center"><span class="w-1.5 h-1.5 bg-cyber-purple rounded-full mr-2"></span> Meta-Estimador de fusión avanzada.</li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Requirements Summary -->
+            <div class="bg-slate-900 p-6 rounded-xl border border-slate-700 text-center">
+                <h4 class="text-white font-bold mb-4 uppercase text-xs tracking-widest">Entregables Clave</h4>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="p-4 bg-slate-950 rounded border border-white/5"><p class="text-cyber-cyan font-bold text-lg">🎥</p><p class="text-[10px] uppercase text-slate-500">Videos OSD</p></div>
+                    <div class="p-4 bg-slate-950 rounded border border-white/5"><p class="text-cyber-amber font-bold text-lg">📈</p><p class="text-[10px] uppercase text-slate-500">PDF Gráficas</p></div>
+                    <div class="p-4 bg-slate-950 rounded border border-white/5"><p class="text-cyber-purple font-bold text-lg">🐳</p><p class="text-[10px] uppercase text-slate-500">Dockerized</p></div>
+                    <div class="p-4 bg-slate-950 rounded border border-white/5"><p class="text-white font-bold text-lg">📝</p><p class="text-[10px] uppercase text-slate-500">README.md</p></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tab 3: Evaluation -->
+        <section id="eval" class="tab-content space-y-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div class="chart-container">
+                    <canvas id="evalChart"></canvas>
+                </div>
+                <div class="space-y-4">
+                    <h2 class="text-2xl font-bold text-white mb-4">Criterios de Éxito</h2>
+                    <div class="space-y-4">
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded bg-cyber-cyan/10 flex items-center justify-center text-cyber-cyan font-bold">25%</div>
+                            <div>
+                                <h5 class="text-white font-bold text-sm">Rigor Matemático</h5>
+                                <p class="text-xs text-slate-500">Manejo de perspectiva, homografías y precisión en cinemática.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded bg-cyber-purple/10 flex items-center justify-center text-cyber-purple font-bold">27%</div>
+                            <div>
+                                <h5 class="text-white font-bold text-sm">Arquitectura de Software</h5>
+                                <p class="text-xs text-slate-500">Código modular, limpio y escalable (SOLID).</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded bg-cyber-amber/10 flex items-center justify-center text-cyber-amber font-bold">23%</div>
+                            <div>
+                                <h5 class="text-white font-bold text-sm">Performance</h5>
+                                <p class="text-xs text-slate-500">Eficiencia en inferencia y procesamiento de streams.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded bg-white/10 flex items-center justify-center text-white font-bold">25%</div>
+                            <div>
+                                <h5 class="text-white font-bold text-sm">MLOps & Robustez</h5>
+                                <p class="text-xs text-slate-500">Dockerización, documentación y éxito en set de testing.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tab 4: Stack & Delivery -->
+        <section id="stack" class="tab-content space-y-8">
+            <div class="max-w-3xl mx-auto bg-cyber-card p-8 rounded-2xl neon-border-amber">
+                <h2 class="text-2xl font-bold text-white mb-6 text-center">Tech Stack & Entrega</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                    <div class="space-y-4">
+                        <h5 class="text-cyber-amber font-bold text-xs uppercase tracking-widest">Entorno</h5>
+                        <ul class="text-sm space-y-2 text-slate-300">
+                            <li class="flex items-center gap-2">🐍 Python 3.9+</li>
+                            <li class="flex items-center gap-2">👁️ OpenCV / PyTorch</li>
+                            <li class="flex items-center gap-2">🧮 NumPy / SciPy</li>
+                        </ul>
+                    </div>
+                    <div class="space-y-4">
+                        <h5 class="text-cyber-amber font-bold text-xs uppercase tracking-widest">Ejecución Docker</h5>
+                        <div class="bg-slate-950 p-3 rounded font-mono text-[10px] text-cyber-cyan border border-white/5">
+                            # Comando unificado de ejecución<br>
+                            $ docker run -v /local/TEST_VEL:/app/TEST_VEL \<br>
+                            &nbsp;&nbsp;velocity_pulse --method fusion
+                        </div>
+                    </div>
+                </div>
+                <div class="p-4 bg-slate-900/50 rounded-lg border border-slate-700 text-center">
+                    <p class="text-xs text-slate-400 italic">"Preferimos un código robusto y bien documentado que una solución compleja pero inestable."</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="mt-20 py-12 border-t border-slate-800 text-center">
+        <p class="text-xs text-slate-500 uppercase tracking-[0.5em] mb-4">Deliryum.AI // Engineering Department</p>
+        <div class="flex justify-center gap-4 text-cyber-cyan text-xl">
+            <span>◈</span>
+        </div>
+    </footer>
+
+    <script>
+        // Tab switching logic
+        function showTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.nav-tab').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            event.target.classList.add('active');
+            
+            if(tabId === 'eval') initChart();
+        }
+
+        // Video switching logic
+        function changeVideo(src, speed) {
+            const video = document.getElementById('mainVideo');
+            video.src = src;
+            video.play();
+        }
+
+        // Chart.js implementation
+        let chartInstance = null;
+        function initChart() {
+            if (chartInstance) chartInstance.destroy();
+            const ctx = document.getElementById('evalChart').getContext('2d');
+            
+            chartInstance = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['Rigor Matemático', 'Arquitectura', 'Performance', 'MLOps'],
+                    datasets: [{
+                        label: 'Ponderación %',
+                        data: [25, 27, 23, 25],
+                        backgroundColor: 'rgba(34, 211, 238, 0.2)',
+                        borderColor: '#22d3ee',
+                        pointBackgroundColor: '#fff',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: { color: '#334155' },
+                            grid: { color: '#334155' },
+                            pointLabels: { color: '#94a3b8', font: { size: 10 } },
+                            ticks: { display: false, backdropColor: 'transparent' },
+                            suggestedMin: 0,
+                            suggestedMax: 30
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
